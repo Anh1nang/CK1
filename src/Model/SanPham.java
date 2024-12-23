@@ -1,3 +1,5 @@
+package Model;
+
 public class SanPham {
     private String maSp;
     private String tenSp;

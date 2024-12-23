@@ -1,7 +1,9 @@
+package Service;
+
+import Model.SanPham;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Vector;
 
 public class SanPhamSevice extends SQLServerSevice{

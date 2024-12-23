@@ -1,13 +1,15 @@
+package Application;
+
+import Model.DanhMuc;
+import Model.SanPham;
+import Service.DanhMucService;
+import Service.SanPhamSevice;
+
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.Vector;
 
 public class Application extends JFrame {
@@ -129,7 +131,7 @@ public class Application extends JFrame {
         btnThemDanhMuc.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                HienThiThemDanhMuc htdm = new HienThiThemDanhMuc();
+                hienThiThemDanhMuc();
                 hienThiDanhMuc();
             }
         });
@@ -145,17 +147,7 @@ public class Application extends JFrame {
         btnXoaDanhMuc.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(dmSelected == null){
-                    JOptionPane.showMessageDialog(null, "Vui Long Chon Muc Can Xoa");
-                    return;
-                }
-                DanhMucService dms = new DanhMucService();
-                if(dms.xoaDanhMuc(dmSelected) == 1){
-                    JOptionPane.showMessageDialog(null, "Xoa Thanh Cong!");
-                    hienThiDanhMuc();
-                }else{
-                    JOptionPane.showMessageDialog(null, "Xoa Khong Thanh Cong!");
-                }
+                xoaDanhMuc();
             }
         });
         btnTimKiemSanPham.addActionListener(new ActionListener() {
@@ -188,6 +180,59 @@ public class Application extends JFrame {
         });
     }
 
+    private void hienThiThemDanhMuc(){
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JLabel lMaDanhMuc = new JLabel("Ma Danh Muc");
+        JTextField tTenDanhMuc = new JTextField(20);
+        JLabel lTenDanhMuc = new JLabel("Ten Danh Muc");
+        JTextField tMaDanhMuc = new JTextField(20);
+        panel.add(lMaDanhMuc);
+        panel.add(tMaDanhMuc);
+        panel.add(lTenDanhMuc);
+        panel.add(tTenDanhMuc);
+
+        int option = JOptionPane.showConfirmDialog(null, panel,
+                "Them Danh Muc",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE);
+        if(option == JOptionPane.OK_OPTION){
+            String tenDanhMuc = tTenDanhMuc.getText();
+            String maDanhMuc = tMaDanhMuc.getText();
+            if(tenDanhMuc.isEmpty() || maDanhMuc.isEmpty()){
+                JOptionPane.showMessageDialog(null,"Thong tin khong dau du");
+            }else{
+                DanhMuc dm = new DanhMuc(maDanhMuc, tenDanhMuc);
+                DanhMucService dms = new DanhMucService();
+                int result = dms.themDanhMuc(dm);
+                if(result == 1){
+                    JOptionPane.showMessageDialog(null,"Them thanh cong!");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Them khong thanh cong");
+                }
+            }
+        }
+    }
+    private void xoaDanhMuc() {
+        if (dmSelected == null) {
+            JOptionPane.showMessageDialog(null, "Chua chon danh muc de xoa");
+        }
+        int result = JOptionPane.showConfirmDialog(null,
+                "Chac chan muon xoa danh muc nay?",
+                "xac nhan", JOptionPane.YES_NO_OPTION);
+
+        if(result == JOptionPane.YES_OPTION){
+            DanhMucService dm =new DanhMucService();
+            if(dm.xoaDanhMuc(dmSelected.getMaDm())> 0){
+                JOptionPane.showMessageDialog(null,"Xóa thành công");
+                hienThiDanhMuc();
+
+            }else {
+                JOptionPane.showMessageDialog(null,"xóa thất bại");
+            }
+        }
+    }
     private void hienThiTaoMoiSanPham(){
         if(dmSelected == null){
             JOptionPane.showMessageDialog(null,"hay chon danh muc can chinh sua");
@@ -344,6 +389,8 @@ public class Application extends JFrame {
                     }
 
                 }
+            }else{
+                return;
             }
 
         }

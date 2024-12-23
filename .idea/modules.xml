@@ -3,10 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Anhpro.iml" filepath="$PROJECT_DIR$/Anhpro.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Apollot/Apollot.iml" filepath="$PROJECT_DIR$/Apollot/Apollot.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Application/Application.iml" filepath="$PROJECT_DIR$/Application/Application.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Model/Model.iml" filepath="$PROJECT_DIR$/Model/Model.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Service/Service.iml" filepath="$PROJECT_DIR$/Service/Service.iml" />
     </modules>
   </component>
 </project>

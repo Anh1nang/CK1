@@ -1,3 +1,7 @@
+package Service;
+
+import Model.DanhMuc;
+import Model.SanPham;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,17 +55,23 @@ public class DanhMucService extends SQLServerSevice{
         return -1;
     }
 
-    public int xoaDanhMuc(DanhMuc dm){
+
+    public int xoaDanhMuc(String maDM){
+        int result= 0;
         try{
-            String sql = "delete from DanhMuc where MaDM = ?";
-            PreparedStatement preSt = con.prepareStatement(sql);
-            preSt.setString(1, dm.getMaDm());
-            return preSt.executeUpdate();
-        } catch (SQLException e) {
+            String sql = "UPDATE Model.DanhMuc SET isdeleted = 1  WHERE maDM= ?";
+            PreparedStatement preparedStatement= con.prepareStatement(sql);
+            preparedStatement.setString(1, maDM);
+            System.out.println("xoa san pham: "+ maDM);
+            result= preparedStatement.executeUpdate();
+            System.out.println("ket qua xoa: "+result);
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
-        return -1;
+        return result;
     }
+
 
     public DanhMuc timDanhMucTheoMaDanhMuc(SanPham sp){
         DanhMuc dm = new DanhMuc();
